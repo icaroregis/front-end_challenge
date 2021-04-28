@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import { api } from '../services/api';
 import UsersTable from '../components/UsersTable';
 
 export default {
@@ -26,11 +25,17 @@ export default {
   },
 
   data() {
-    return {
-      users: [],
-    };
+    return {};
   },
-
+  computed: {
+    users() {
+      return this.$store.state.users;
+    },
+  },
+  mounted() {
+    // this.$store.dispatch('getUsers');
+    this.$store.dispatch('getUsers');
+  },
   methods: {
     handleNavigateToCreate() {
       this.$router.push('/create/');
@@ -39,12 +44,6 @@ export default {
       this.users.splice(index, 1);
       console.log(index);
     },
-  },
-
-  mounted() {
-    api.get('/users').then((response) => {
-      this.users = response.data[0].users;
-    });
   },
 };
 </script>
