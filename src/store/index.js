@@ -19,10 +19,10 @@ const store = new Vuex.Store({
     ADD_USER(state, newUser) {
       state.users.push(newUser);
     },
-    initialiseStore(users) {
-      if (localStorage.getItem('armazenar')) {
+    initialiseStore(state) {
+      if (localStorage.getItem('store')) {
         this.replaceState(
-          Object.assign(users, JSON.parse(localStorage.getItem('store')))
+          Object.assign(state, JSON.parse(localStorage.getItem('store')))
         );
       }
     },
@@ -35,9 +35,6 @@ const store = new Vuex.Store({
         .then((response) => {
           context.commit('SET_USERS', response.data[0].users);
         });
-      localStorage.getItem('users');
-      localStorage.setItem('users', JSON.stringify(this.users));
-      JSON.parse(localStorage.getItem('users'));
     },
     delete(context, index) {
       context.commit('DELETE_USER', index);
@@ -46,6 +43,10 @@ const store = new Vuex.Store({
       context.commit('ADD_USER', newUser);
     },
   },
+});
+
+store.subscribe((mutation, state) => {
+  localStorage.setItem('store', JSON.stringify(state));
 });
 
 export default store;

@@ -123,16 +123,16 @@ export default {
       this.$router.push({ name: 'UserList' });
     },
   },
-  mounted() {
-    if (localStorage.users) {
-      this.users = localStorage.users;
-    }
-  },
-  watch: {
-    users(newUsers) {
-      localStorage.users = newUsers;
-    },
-  },
+  // mounted() {
+  //   if (localStorage.users) {
+  //     this.users = localStorage.users;
+  //   }
+  // },
+  // watch: {
+  //   users(newUsers) {
+  //     localStorage.users = newUsers;
+  //   },
+  // },
 };
 </script>
 
