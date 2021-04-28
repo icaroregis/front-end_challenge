@@ -20,7 +20,7 @@
             </button>
           </div>
 
-          <form @submit.prevent="handleSubmit">
+          <form @submit.prevent="checkForm">
             <div class="div-form">
               <div class="div-form-child">
                 <label for="name">Nome</label>
@@ -78,6 +78,13 @@
               />
             </div>
           </form>
+          <div>
+            <ul>
+              <span v-for="error in errors" :key="error">{{
+                error
+              }}</span>
+            </ul>
+          </div>
           <div class="div-button">
             <button
               class="salv-button"
@@ -107,6 +114,7 @@ export default {
         occupation: '',
         role: '',
         active: false,
+        errors: [],
       },
       foto: {
         url:
@@ -116,9 +124,39 @@ export default {
     };
   },
   methods: {
+    checkForm() {
+      this.errors = [];
+      if (this.name.length <= 3 || this.name === '' || this.name === ' ') {
+        this.errors.push('O campo deve conter 3 caracteres ou mais');
+      }
+
+      if (this.email.length <= 3 || this.email === '' || this.email === ' ') {
+        this.errors.push('O campo email deve ser preenchido');
+      }
+
+      if (
+        this.department <= 3 ||
+        this.department === '' ||
+        this.department === ' '
+      ) {
+        this.errors.push('O campo departamento deve ser preenchido');
+      }
+
+      if (
+        this.occupation <= 3 ||
+        this.occupation === '' ||
+        this.occupation === ' '
+      ) {
+        this.errors.push('O campo cargo deve ser preenchido');
+      }
+
+      if (this.role.length <= 3 || this.role === '' || this.role === ' ') {
+        this.errors.push('O campo função deve ser preenchido');
+      }
+    },
     createNewUser(newUser) {
       store.dispatch('addNewUser', newUser);
-      this.$router.push({ name: 'UserList' });
+      // this.$router.push({ name: 'UserList' });
     },
   },
   mounted() {
