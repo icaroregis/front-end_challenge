@@ -1,27 +1,41 @@
-import api from '../services/api';
-import Vuex from 'vuex';
 import Vue from 'vue';
+import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
-const state = {
-  users: [],
-};
-
-const gattes = {};
-
-const actions = {
-  getUsers({ commit }) {
-    api.get('/users').then((response) => {
-      commit('SET_USERS', response.data[0].users);
-    });
+const store = new Vuex.Store({
+  state: {
+    users: [],
   },
-};
 
-const mutations = {
-  SET_USERS(state, users) {
-    state.users = users;
+  mutations: {
+    SET_USERS(state, users) {
+      state.users = users;
+    },
+    DELETE_USER(state, index) {
+      state.users.splice(index, 1);
+    },
+    ADD_USER(state, newUser) {
+      state.users.push(newUser);
+    },
   },
-};
 
-export default new Vuex.mapState({ state, gattes, actions, mutations });
+  actions: {
+    getUsers(context) {
+      axios
+        .get('https://private-5b8666-testefrontendpc4.apiary-mock.com/users')
+        .then((response) => {
+          context.commit('SET_USERS', response.data[0].users);
+        });
+    },
+    delete(context, index) {
+      context.commit('DELETE_USER', index);
+    },
+    addNewUser(context, newUser) {
+      context.commit('ADD_USER', newUser);
+    },
+  },
+});
+
+export default store;

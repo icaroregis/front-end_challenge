@@ -17,6 +17,7 @@
 
 <script>
 import UsersTable from '../components/UsersTable';
+import store from '../store/store';
 
 export default {
   name: 'UserList',
@@ -29,20 +30,18 @@ export default {
   },
   computed: {
     users() {
-      return this.$store.state.users;
+      return store.state.users;
     },
   },
   mounted() {
-    // this.$store.dispatch('getUsers');
-    this.$store.dispatch('getUsers');
+    store.dispatch('getUsers');
   },
   methods: {
     handleNavigateToCreate() {
       this.$router.push('/create/');
     },
     removeUserFromArray(index) {
-      this.users.splice(index, 1);
-      console.log(index);
+      store.dispatch('delete', index);
     },
   },
 };
