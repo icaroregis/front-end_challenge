@@ -122,9 +122,7 @@ export default {
     },
   },
   mounted() {
-    if (!localStorage.getItem('store')) {
-      localStorage.setItem('state', JSON.parse('store'));
-    }
+    if (!localStorage.getItem('store')) store.dispatch('getUsers');
   },
 };
 </script>
