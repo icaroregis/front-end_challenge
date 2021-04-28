@@ -20,11 +20,12 @@
             </button>
           </div>
 
-          <form @submit.prevent="checkForm">
+          <form @submit.prevent="checkForm()">
             <div class="div-form">
               <div class="div-form-child">
                 <label for="name">Nome</label>
                 <input
+                  id="name"
                   class="div-input"
                   v-model="users.name"
                   type="text"
@@ -35,6 +36,7 @@
               <div class="div-form-child">
                 <label for="email">E-mail</label>
                 <input
+                  id="email"
                   class="div-input"
                   v-model="users.email"
                   type="email"
@@ -48,6 +50,7 @@
               <div class="div-form-child">
                 <label for="setor">Setor</label>
                 <input
+                  id="department"
                   class="div-input"
                   v-model="users.department"
                   type="text"
@@ -58,6 +61,7 @@
               <div class="div-form-child">
                 <label for="cargo">Cargo</label>
                 <input
+                  id="occupation"
                   class="div-input"
                   v-model="users.occupation"
                   type="text"
@@ -70,6 +74,7 @@
             <div class="special-div">
               <label for="funcao">Função</label>
               <input
+                id="role"
                 class="div-input"
                 v-model="users.role"
                 type="text"
@@ -80,9 +85,7 @@
           </form>
           <div>
             <ul>
-              <span v-for="error in errors" :key="error">{{
-                error
-              }}</span>
+              <span v-for="error in errors" :key="error">{{ errors }}</span>
             </ul>
           </div>
           <div class="div-button">
@@ -114,8 +117,8 @@ export default {
         occupation: '',
         role: '',
         active: false,
-        errors: [],
       },
+      errors: [],
       foto: {
         url:
           'https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=200&fit=max',
@@ -125,7 +128,6 @@ export default {
   },
   methods: {
     checkForm() {
-      this.errors = [];
       if (this.name.length <= 3 || this.name === '' || this.name === ' ') {
         this.errors.push('O campo deve conter 3 caracteres ou mais');
       }
@@ -154,9 +156,10 @@ export default {
         this.errors.push('O campo função deve ser preenchido');
       }
     },
+
     createNewUser(newUser) {
       store.dispatch('addNewUser', newUser);
-      // this.$router.push({ name: 'UserList' });
+      this.$router.push({ name: 'UserList' });
     },
   },
   mounted() {
