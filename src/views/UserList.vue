@@ -17,7 +17,7 @@
 
 <script>
 import UsersTable from '../components/UsersTable';
-import store from '../store/store';
+import store from '../store/index';
 
 export default {
   name: 'UserList',
@@ -41,7 +41,7 @@ export default {
       this.$router.push('/create/');
     },
     removeUserFromArray(index) {
-      store.dispatch('delete', index);
+      store.dispatch('delete', index); 
     },
   },
 };

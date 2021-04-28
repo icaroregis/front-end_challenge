@@ -59,7 +59,7 @@
                 <label for="cargo">Cargo</label>
                 <input
                   class="div-input"
-                  v-model="users.cargo"
+                  v-model="users.occupation"
                   type="text"
                   placeholder="Selecione um item"
                   required
@@ -82,7 +82,7 @@
             <button
               class="salv-button"
               type="submit"
-              @click.prevent="saveUser(users)"
+              @click.prevent="createNewUser"
             >
               Salvar
             </button>
@@ -94,15 +94,20 @@
 </template>
 
 <script>
-import { api } from '../services/api';
+import store from '../store/index';
 
 export default {
   name: 'CreateUser',
   data() {
     return {
-      users: [],
-      id: null,
-      active: false,
+      users: {
+        name: '',
+        email: '',
+        department: '',
+        occupation: '',
+        role: '',
+        active: false,
+      },
       foto: {
         url:
           'https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=200&fit=max',
@@ -110,28 +115,12 @@ export default {
       },
     };
   },
-
   methods: {
-    mounted() {
-      api.get('/users').then((response) => {
-        this.users = response.data[0].users;
-      });
-    },
-    saveUser(users) {
-      console.log(users);
-    },
-
-    saveUsersInLocalStorage(user) {
-      let users = localStorage.getItem('usersApp');
-
-      if (users) {
-        users = JSON.parse(users);
-        users.push(this.users);
-      } else {
-        users = [users];
-      }
-
-      localStorage.setItem('usersApp', JSON.stringify(user));
+    createNewUser(newUser) {
+      this.users = newUser;
+      console.log(newUser);
+      store.dispatch('addNewUser', newUser);
+      this.$router.push({ name: 'UserList' });
     },
   },
 };
