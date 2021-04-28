@@ -82,7 +82,7 @@
             <button
               class="salv-button"
               type="submit"
-              @click.prevent="createNewUser"
+              @click.prevent="createNewUser(users)"
             >
               Salvar
             </button>
@@ -118,9 +118,19 @@ export default {
   methods: {
     createNewUser(newUser) {
       this.users = newUser;
-      console.log(newUser);
       store.dispatch('addNewUser', newUser);
+      console.log(newUser);
       this.$router.push({ name: 'UserList' });
+    },
+  },
+  mounted() {
+    if (localStorage.users) {
+      this.users = localStorage.users;
+    }
+  },
+  watch: {
+    users(newUsers) {
+      localStorage.users = newUsers;
     },
   },
 };

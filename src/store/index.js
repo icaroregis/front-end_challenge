@@ -19,6 +19,13 @@ const store = new Vuex.Store({
     ADD_USER(state, newUser) {
       state.users.push(newUser);
     },
+    initialiseStore(users) {
+      if (localStorage.getItem('armazenar')) {
+        this.replaceState(
+          Object.assign(users, JSON.parse(localStorage.getItem('store')))
+        );
+      }
+    },
   },
 
   actions: {
@@ -28,6 +35,9 @@ const store = new Vuex.Store({
         .then((response) => {
           context.commit('SET_USERS', response.data[0].users);
         });
+      localStorage.getItem('users');
+      localStorage.setItem('users', JSON.stringify(this.users));
+      JSON.parse(localStorage.getItem('users'));
     },
     delete(context, index) {
       context.commit('DELETE_USER', index);
