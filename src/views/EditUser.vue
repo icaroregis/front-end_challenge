@@ -20,7 +20,7 @@
             </button>
           </div>
 
-          <form @submit.prevent="checkForm">
+          <form>
             <div class="div-form">
               <div class="div-form-child">
                 <label for="name">Nome</label>
@@ -128,33 +128,40 @@ export default {
     };
   },
   methods: {
-    checkForm() {
-      this.errors = [];
+    createNewUser(newUser) {
+      let isError = false;
+
+      if (
+        !this.users.name ||
+        !this.users.email ||
+        !this.users.department ||
+        !this.users.occupation ||
+        !this.users.role
+      ) {
+        isError = true;
+      }
+
       if (!this.users.name) {
         this.errors.push('O campo nome deve ser preenchido');
       }
-      console.log(this.name);
 
-      if (!this.email) {
-        this.errors.push('O campo email deve ser preenchido');
+      // if (!this.department) {
+      //   this.errors.push("O campo departamento deve ser preenchido");
+      // }
+
+      // if (!this.occupation) {
+      //   this.errors.push("O campo cargo deve ser preenchido");
+      // }
+
+      // if (!this.role) {
+      //   this.errors.push("O campo função deve ser preenchido");
+      // }
+
+      if (!isError) {
+        store.dispatch('addNewUser', newUser);
+        this.$router.push({ name: 'UserList' });
+        isError = false;
       }
-
-      if (!this.department) {
-        this.errors.push('O campo departamento deve ser preenchido');
-      }
-
-      if (!this.occupation) {
-        this.errors.push('O campo cargo deve ser preenchido');
-      }
-
-      if (!this.role) {
-        this.errors.push('O campo função deve ser preenchido');
-      }
-    },
-
-    createNewUser(newUser) {
-      store.dispatch('addNewUser', newUser);
-      this.$router.push({ name: 'UserList' });
     },
   },
 };
