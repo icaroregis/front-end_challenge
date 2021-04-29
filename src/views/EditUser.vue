@@ -145,17 +145,17 @@ export default {
         this.errors.push('O campo nome deve ser preenchido');
       }
 
-      // if (!this.department) {
-      //   this.errors.push("O campo departamento deve ser preenchido");
-      // }
+      if (!this.users.department) {
+        this.errors.push('O campo departamento deve ser preenchido');
+      }
 
-      // if (!this.occupation) {
-      //   this.errors.push("O campo cargo deve ser preenchido");
-      // }
+      if (!this.users.occupation) {
+        this.errors.push('O campo cargo deve ser preenchido');
+      }
 
-      // if (!this.role) {
-      //   this.errors.push("O campo função deve ser preenchido");
-      // }
+      if (!this.users.role) {
+        this.errors.push('O campo função deve ser preenchido');
+      }
 
       if (!isError) {
         store.dispatch('addNewUser', newUser);

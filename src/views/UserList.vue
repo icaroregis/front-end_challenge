@@ -34,14 +34,14 @@ export default {
     },
   },
   mounted() {
-    store.dispatch('getUsers');
+    if (!localStorage.getItem('store')) store.dispatch('getUsers');
   },
   methods: {
     handleNavigateToCreate() {
       this.$router.push('/create/');
     },
     removeUserFromArray(index) {
-      store.dispatch('delete', index); 
+      store.dispatch('delete', index);
     },
   },
 };
