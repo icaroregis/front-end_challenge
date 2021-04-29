@@ -20,7 +20,7 @@
             </button>
           </div>
 
-          <form @submit.prevent="checkForm()">
+          <form @submit.prevent="checkForm">
             <div class="div-form">
               <div class="div-form-child">
                 <label for="name">Nome</label>
@@ -85,7 +85,7 @@
           </form>
           <div>
             <ul>
-              <span v-for="error in errors" :key="error">{{ errors }}</span>
+              <li v-for="error in errors" :key="error">{{ errors }}</li>
             </ul>
           </div>
           <div class="div-button">
@@ -110,6 +110,7 @@ export default {
   name: 'CreateUser',
   data() {
     return {
+      errors: [],
       users: {
         name: '',
         email: '',
@@ -118,7 +119,7 @@ export default {
         role: '',
         active: false,
       },
-      errors: [],
+
       foto: {
         url:
           'https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=200&fit=max',
@@ -128,31 +129,25 @@ export default {
   },
   methods: {
     checkForm() {
-      if (this.name.length <= 3 || this.name === '' || this.name === ' ') {
-        this.errors.push('O campo deve conter 3 caracteres ou mais');
+      this.errors = [];
+      if (!this.users.name) {
+        this.errors.push('O campo nome deve ser preenchido');
       }
+      console.log(this.name);
 
-      if (this.email.length <= 3 || this.email === '' || this.email === ' ') {
+      if (!this.email) {
         this.errors.push('O campo email deve ser preenchido');
       }
 
-      if (
-        this.department <= 3 ||
-        this.department === '' ||
-        this.department === ' '
-      ) {
+      if (!this.department) {
         this.errors.push('O campo departamento deve ser preenchido');
       }
 
-      if (
-        this.occupation <= 3 ||
-        this.occupation === '' ||
-        this.occupation === ' '
-      ) {
+      if (!this.occupation) {
         this.errors.push('O campo cargo deve ser preenchido');
       }
 
-      if (this.role.length <= 3 || this.role === '' || this.role === ' ') {
+      if (!this.role) {
         this.errors.push('O campo função deve ser preenchido');
       }
     },
@@ -161,9 +156,6 @@ export default {
       store.dispatch('addNewUser', newUser);
       this.$router.push({ name: 'UserList' });
     },
-  },
-  mounted() {
-    if (!localStorage.getItem('store')) store.dispatch('getUsers');
   },
 };
 </script>
