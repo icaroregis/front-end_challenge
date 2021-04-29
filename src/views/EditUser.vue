@@ -129,6 +129,7 @@ export default {
   },
   methods: {
     createNewUser(newUser) {
+      this.errors = [];
       let isError = false;
 
       if (
